@@ -1,7 +1,6 @@
 #include "config.hpp"
 
-byte joyLeftValues[2];
-byte joyRightValue[2];
+byte joyLeftValues[2], _joyLeftValues[2]{0}, joyRightValue[2], _joyRightValue[2]{0};
 
 // byte ptr_l[2] = *joyLeftValues;
 // byte ptr_r[2] = *joyLeftValues;
@@ -20,9 +19,17 @@ void setup()
   tft.init(240, 320);
   tft.fillScreen(ST77XX_BLUE);
   tft.setRotation(2);
-  tft.setTextSize(1);
-  tft.setCursor(10, 40);
-  tft.print("Hello");
+  tft.setTextSize(2);
+  tft.setCursor(10, 10);
+  tft.print("Joystick 1X:");
+  tft.setCursor(10, 30);
+  tft.print("Joystick 1Y:");
+  tft.setCursor(10, 50);
+  tft.print("Joystick 2X:");
+  tft.setCursor(10, 70);
+  tft.print("Joystick 2Y:");
+
+
 }
 
 PeriodicTask DETECT_LEFT_JOYSTICK_VALUE(100, joystick1_read), DETECT_RIGHT_JOYSTICK_VALUE(100, joystick2_read), DETECT_BATTERY(1000, getBatteryLevel);
@@ -34,21 +41,24 @@ void loop()
 
   if (millis() % 100 == 0)
   {
-    tft.setCursor(10, 10);
-    tft.print("Joystick 1X:   ");
-    tft.print(String(joyLeftValues[0]));
+    if (joyLeftValues[0]!=_joyLeftValues[0] || joyLeftValues[1]!=_joyLeftValues[1])
+    {
+      /* code */
+      _joyLeftValues[0]=joyLeftValues[0];
+      _joyLeftValues[1]=joyLeftValues[1];
+      tft.fillRect(167,10,36,50,ST77XX_BLUE);
+      tft.setCursor(167,10);
+      tft.print(_joyLeftValues[0]);
+      tft.setCursor(167,30);
+      tft.print(_joyLeftValues[0]);
+    }
+    
+    tft.print(joyLeftValues[0]);
+    tft.print(joyLeftValues[1]);
 
-    tft.setCursor(10, 20);
-    tft.print("Joystick 1Y:   ");
-    tft.print(String(joyLeftValues[1]));
+    tft.print(joyRightValue[0]);
 
-    tft.setCursor(20, 10);
-    tft.print("Joystick 2X:   ");
-    tft.print(String(joyRightValue[0]));
-
-    tft.setCursor(20, 20);
-    tft.print("Joystick 2Y:   ");
-    tft.print(String(joyRightValue[1]));
+    tft.print(joyRightValue[1]);
   }
 }
 
