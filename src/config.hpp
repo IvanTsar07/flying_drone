@@ -23,13 +23,20 @@
 #define Joy1_Y (A1)
 #define Joy2_X (A2)
 #define Joy2_Y (A3)
+#define BATT_P (A4)
+
 #define LEFT_JOY (0)
 #define RIGHT_JOY (1)
+
+#define MODE_Prcnt (0)
+#define MODE_VOLT (1)
 
 // extern
 
 void read_Joystick(bool which, byte data[2]),
     turnOFF_display(void);
+
+float getBattery(bool mode);
 
 class PeriodicTask
 {
