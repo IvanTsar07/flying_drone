@@ -10,6 +10,7 @@ Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 
 void joystick1_read();
 void joystick2_read();
+void getBatteryLevel();
 
 void setup()
 {
@@ -24,7 +25,7 @@ void setup()
   tft.print("Hello");
 }
 
-PeriodicTask DETECT_LEFT_JOYSTICK_VALUE(100, joystick1_read), DETECT_RIGHT_JOYSTICK_VALUE(100, joystick2_read);
+PeriodicTask DETECT_LEFT_JOYSTICK_VALUE(100, joystick1_read), DETECT_RIGHT_JOYSTICK_VALUE(100, joystick2_read), DETECT_BATTERY(1000, getBatteryLevel);
 
 void loop()
 {
@@ -59,4 +60,18 @@ void joystick1_read()
 void joystick2_read()
 {
   read_Joystick(RIGHT_JOY, joyRightValue);
+}
+
+void getBatteryLevel()
+{
+  float battery = getBattery(MODE_Prcnt);
+
+  tft.setCursor(40, 10);
+  tft.print("Battery: ");
+  tft.print(String(battery));
+
+  if (MODE_Prcnt)
+  {
+    tft.print("%");
+  }
 }
