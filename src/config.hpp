@@ -28,17 +28,17 @@
 
 // extern
 
-void read_Joystick(bool which, byte *data[2]),
+void read_Joystick(bool which, byte data[2]),
     turnOFF_display(void);
 
 class PeriodicTask
 {
+  private:
+    unsigned long previousMillis;
+  unsigned long interval;
+  void (*task)();
 
 public:
   PeriodicTask(unsigned long interval, void (*task)());
-
-  unsigned long previousMillis;
-  unsigned long interval;
-  void (*task)();
   void run();
 };

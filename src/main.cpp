@@ -1,9 +1,15 @@
 #include "config.hpp"
 
-byte *joyLeftValues[2];
-byte *joyRightValue[2];
+byte joyLeftValues[2];
+byte joyRightValue[2];
+
+// byte ptr_l[2] = *joyLeftValues;
+// byte ptr_r[2] = *joyLeftValues;
 
 Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
+
+void joystick1_read();
+void joystick2_read();
 
 void setup()
 {
